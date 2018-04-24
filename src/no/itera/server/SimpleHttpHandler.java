@@ -26,7 +26,7 @@ public class SimpleHttpHandler implements HttpHandler {
     }
 
     private static String getResponse(String queryString) {
-        String query = ofNullable(queryString).orElse("empty");
+        String query = ofNullable(queryString).orElse("none");
         return format("Response to query = ['%s']", query);
     }
 }
