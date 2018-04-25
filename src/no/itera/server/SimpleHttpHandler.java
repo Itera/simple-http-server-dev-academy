@@ -17,7 +17,8 @@ public class SimpleHttpHandler implements HttpHandler {
     }
 
     private static void handleResponse(HttpExchange exchange) throws IOException {
-        String response = getResponse(exchange.getRequestURI().getQuery());
+        String response = getResponse(exchange);
+
         exchange.sendResponseHeaders(HTTP_OK, response.length());
 
         OutputStream outputStream = exchange.getResponseBody();
@@ -25,8 +26,8 @@ public class SimpleHttpHandler implements HttpHandler {
         outputStream.close();
     }
 
-    private static String getResponse(String queryString) {
-        String query = ofNullable(queryString).orElse("none");
-        return format("Response to query = ['%s']", query);
+    private static String getResponse(HttpExchange exchange) {
+        String ipAddress = exchange.getRemoteAddress().getAddress().getHostAddress();
+        return format("Your IP address is %s", ipAddress);
     }
 }
