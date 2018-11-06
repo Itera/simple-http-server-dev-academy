@@ -17,7 +17,7 @@ public class SimpleHttpHandler implements HttpHandler {
     }
 
     private static void handleResponse(HttpExchange exchange) throws IOException {
-        String response = getResponse(exchange.getRequestURI().getQuery());
+        String response = getResponse(exchange.getRemoteAddress().toString());
         exchange.sendResponseHeaders(HTTP_OK, response.length());
 
         OutputStream outputStream = exchange.getResponseBody();
