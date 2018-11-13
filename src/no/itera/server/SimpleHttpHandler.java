@@ -17,7 +17,13 @@ public class SimpleHttpHandler implements HttpHandler {
     }
 
     private static void handleResponse(HttpExchange exchange) throws IOException {
-        String response = getResponse(exchange.getRemoteAddress().toString());
+        String requestUri = exchange.getRequestURI().getPath();
+        String response = "";
+        if (requestUri.equals("/academy/ip")) {
+            response = getResponse(exchange.getRemoteAddress().toString());
+        } else if (requestUri.equals("/academy")){
+            response = getResponse(exchange.getRequestURI().getQuery());
+        }
         exchange.sendResponseHeaders(HTTP_OK, response.length());
 
         OutputStream outputStream = exchange.getResponseBody();
